@@ -27,8 +27,8 @@
 .grid.gap-sm>.cell{padding-left:10px;}
 
 /*表格式栅格，默认单元格内容垂直居中*/
-.line{display: table;width: 100%;table-layout: fixed}
-.multi-line>ul{display: table-row}
+.multi-line,.line{display: table;width: 100%;table-layout: fixed}
+.multi-line>.line{display: table-row}
 .line>.cell,
 .multi-line>ul>li,
 .line>li{display: table-cell;float: none;vertical-align: middle}
