@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../base.css"/>
+    <style>
+        /*按钮*/
+        .btn{border:solid 1px #ddd;background:transparent;font-size:14px;border-radius:4px;padding:6px 15px;margin:0;display:inline-block;line-height:20px;}
+        .btn[disabled]{pointer-events:none;cursor:not-allowed;webkit-box-shadow:none;box-shadow:none;filter:alpha(opacity=50);opacity:.5;}
+        .btn:active{background-image:none;outline:0;transition:all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1) 0s;}
+        .btn:hover{transition:all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1) 0s; color:#fff;border-color:#aaa;background-color:#aaa;}
+        .btn-block{display:block;width:100%;}
+        .input{font-size:14px;padding:6px;border:solid 1px #ddd;border-radius:4px;height:34px;line-height:20px;box-shadow:0 1px 1px rgba(0, 0, 0, 0.075) inset;transition:all 1s cubic-bezier(0.175, 0.885, 0.32, 1) 0s;}
+        .input-auto,.form-inline .input{width:auto;display:inline-block;}
+        body{font-size:14px;line-height:28px}
+        h1,h2,h3,h4,h5,h6{margin-bottom: 15px}
+        pre{
+        margin-bottom: 14px;
+        background-color: #ffe;
+        border: 1px solid #e1e1e8;
+        border-radius: 4px;
+            font-family: sans-serif;
+            font-size:13px;
+            line-height: 1.2;
+            color:#333;
+            padding-top: 15px;
+            position: relative;
+        }
+        pre:before{
+            content:'代码：';
+            display: inline-block;
+            font-weight: bold;
+            position: absolute;
+            top:0
+
+        }
+        .section{
+            min-height: 200px;
+        }
+        .float-left+.cell-auto{
+            padding-left: 30px;
+        }
+        .float-right+.cell-auto{
+            padding-right: 30px;
+        }
+        .bg-white{background: #fff}
+        .line .cell{
+            height: 230px;
+            border:1px solid #eee;
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+<script src="//cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/avalon.js/1.4.7.2/avalon.min.js"></script>
+
+<div class="main-body" >
+    <h1>样式使用文档</h1>
+    <hr>
+    <h2>1.栅格 grid</h2>
+    <div class="padding-lg">
+        <dl>
+        <dt>cols-x:</dt>
+        <dd>x:1-12表示一行显示多少列，忽略此属性，默认为12列;</dd>
+        <dt>gap-xx：</dt>
+        <dd>列间隔，默认sm=10px, md=15px, lg=20px, xl=30px;默认无间隔</dd>
+        </dl>
+
+        <h4>单元格cell</h4>
+        <ol>
+            <li>每一格即为cell,默认宽度为1/12，12为上面cols设置的列数</li>
+            <li>c(x):跨列,"cell c8",即表示显示8/12</li>
+        </ol>
+        </div>
+    <div ms-controller="grid">
+        <div id="gridDemo1" class="demo">
+            <h3>多单元格自动排列</h3>
+          <pre>
+            <code>
+            </code>
+        </pre>
+            <p class="form-inline">
+                每行列数：
+                <select class="input" ms-duplex="cols">
+                    <option value="">默认</option>
+
+                    <option ms-repeat="[2,3,4,5,6,8,10,12]" ms-value="el">{{el}}</option>
+            </select>
+                列间距：<select class="input" ms-duplex="gap">
+                <option value="">none</option>
+                <option ms-repeat="gapSize" ms-value="el">{{el}}</option>
+            </select>
+                <button class="btn" ms-click="count(1)">添加一格</button>
+                <button class="btn" ms-click="count(-1)">删除一格</button>
+            </p>
+            <div class="grid" ms-class="cols-{{cols}}:cols" ms-class-2="gap-{{gap}}:gap" ms-each="cellsArr">
+                <div class="cell">
+                    <div class="section">
+                        <p>cell{{$index+1}}</p>
+                        跨列：<select class="input" ms-change="changeCell">
+                        <option ms-repeat="colsArr" ms-value="$index+1">{{$index+1}}</option>
+                    </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="gridDemo2" class="demo">
+            <h3>自动宽度</h3>
+            <pre>
+            <code></code>
+            </pre>
+
+            <div class="grid">
+                <div ms-class-1="{{fff}}" ms-class-2="c{{floatWidth}}">
+                    <div class="border padding bg-white">
+                        <h4 class="section-head">固定列</h4>
+                        浮动方向：
+                    <select class="input" ms-duplex="fff">
+                        <option value="float-left">float-left</option>
+                        <option value="float-right">float-right</option>
+                    </select><br>
+                        显示宽度：
+                    <select class="input" ms-duplex="floatWidth">
+                        <option ms-repeat="new Array(12)" ms-value="$index+1">{{$index+1}}</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="cell-auto">
+                    <div class="border padding bg-white">
+                        <h4 class="section-head">自动适应宽度</h4>
+                        <p class="section-body">
+                            固定列可以用C1~c12的相对宽度，也可以width定义固定宽度。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="padding"></div>
+    <div ms-controller="line">
+
+        <h2>2. line模式</h2>
+        <p class="padding-left">
+            line模式类似于表格的TD，多个单元格不会折行，始终会挤在一行100%显示。<br/>
+            当所有单元格的总宽度超过100%，自动等比缩窄显示。<br/>
+            当某单元格设置了固定宽度，没有设置宽度的单元格将自动扩充。<br/>
+            单元格内容默认垂直居中对齐！
+
+        </p>
+
+        <div id="lineDemo1" class="demo">
+            <h3>示例</h3>
+          <pre>
+            <code>
+            </code>
+        </pre>
+            <p class="form-inline">
+                每行列数：
+                <select class="input" ms-duplex="cols">
+                    <option value="">默认</option>
+
+                    <option ms-repeat="[2,3,4,5,6,8,10,12]" ms-value="el">{{el}}</option>
+                </select>
+                <button class="btn" ms-click="count(1)">添加一格</button>
+                <button class="btn" ms-click="count(-1)">删除一格</button>
+            </p>
+            <div class="line padded" ms-class="cols-{{cols}}:cols" ms-each="cellsArr">
+                <div class="cell">
+                        <p>cell{{$index+1}}</p>
+                        跨列：<select class="input" ms-change="changeCell">
+                        <option ms-repeat="colsArr" ms-value="$index+1">{{$index+1}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="padding">
+        <h2>浮动框</h2>
+        <h3>简单提示</h3>
+        <ul class="line padded">
+            <li>
+            <a class="bubble arrow-btm" tip="我是提示消息"> 提示在上面</a>
+            </li>
+            <li>
+                <a class="bubble arrow-left" tip="我是提示消息"> 提示在左边</a>
+            </li>
+            <li>
+                <a class="bubble bg-white arrow-btm" tip="我是提示消息"> 白色提示</a>
+            </li>
+        </ul>
+
+    </div>
+</div>
+<script type="text/javascript">
+        var vm=avalon.define({
+            $id:"grid",
+            gapSize:['sm','md','lg','xl'],
+            cols:3, //每行列数
+            colsArr:new Array(2),
+            cellsArr:new Array(3),  //单元格数
+            gap:"md",
+            fff:"float-left",
+            floatWidth:3,
+
+            count:function(n){
+                vm.cellsArr=new Array(vm.cellsArr.length+n || 1)
+            },
+            changeCell:function(){
+                var n = $(this).val();
+                $(this).closest(".cell").attr("class","cell"+ (n>1?" c"+n:''));
+                showHtml($("#gridDemo1"));
+            }
+        });
+        vm.$watch("cols",function(val){
+            vm.colsArr = new Array(val-1);
+            $("#gridDemo1 .cell").attr("class",function() {
+                var n= $(this).find("select").val();
+                return "cell"+ (n>1?" c"+n:'');
+            });
+            showHtml($("#gridDemo1"));
+        });
+    vm.$watch("gap",function(){showHtml("#gridDemo1")});
+    vm.$watch("float",function(){showHtml("#gridDemo2")});
+    //  });
+
+    var vm2=avalon.define({
+        $id:"line",
+        cols:3, //每行列数
+        colsArr:new Array(2),
+        cellsArr:new Array(3),  //单元格数
+
+        count:function(n){
+            vm2.cellsArr=new Array(vm2.cellsArr.length+n || 1)
+        },
+        changeCell:function(){
+            var n = $(this).val();
+            $(this).closest(".cell").attr("class","cell"+ (n>1?" c"+n:''));
+            showHtml($("#lineDemo1"));
+        }
+    });
+
+    vm2.$watch("cols",function(val){
+        vm2.colsArr = new Array(val-1);
+        $("#lineDemo1 .cell").attr("class",function() {
+            var n= $(this).find("select").val();
+            return "cell"+ (n>1?" c"+n:'');
+        });
+        showHtml($("#lineDemo1"));
+    });
+
+    function showHtml(el){
+        var demo = el.find(" .grid,.line").clone();
+            demo.children().html("");
+        var html = demo.prop('outerHTML').replace(/<!--[\s\S]*?--\>/g,'').trim();
+        el.find("code").text(html)
+    }
+    avalon.scan();
+    avalon.nextTick(function(){
+        $(".demo").each(function(){
+            showHtml($(this));
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+/**
+ * @Author:	  quanquan
+ * @DateTime:	2016-06-17 14:13:49
+ * @Description: base页面公共
+ */
+@import "./base/normalize.css";
+
+/* reset 初始化设置 */
+@import "./base/reset.css";
+
+/* common 公共类设置 */
+@import "./base/common.css";
+/* common 项目共用样式 */
+@import "./base/pub.css";
+
